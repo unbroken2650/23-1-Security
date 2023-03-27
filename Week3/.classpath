@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-19">
+=======
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+>>>>>>> e6aea34854c4773224c86f41f8e295bb850f7e0a
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="Libs/bcprov-jdk18on-172.jar"/>
+=======
+	<classpathentry exported="true" kind="lib" path="Libs/bcprov-jdk18on-172.jar"/>
+>>>>>>> e6aea34854c4773224c86f41f8e295bb850f7e0a
 	<classpathentry kind="output" path="bin"/>
 </classpath>
