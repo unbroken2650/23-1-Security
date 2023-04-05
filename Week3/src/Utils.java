@@ -1,4 +1,3 @@
-
 public class Utils {
 	public static String toString(byte[] input) {
 		return new String(input);
