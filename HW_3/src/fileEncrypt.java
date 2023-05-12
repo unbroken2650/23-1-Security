@@ -33,9 +33,10 @@ public class fileEncrypt {
 
 		System.out.println("----------Encryption Start----------");
 
-		File file = new File("sample.jpg");
+		String fileName = "sample.jpg";
+		File file = new File(fileName);
 		long fileSize = file.length();
-		FileInputStream fis = new FileInputStream("sample.jpg");
+		FileInputStream fis = new FileInputStream(fileName);
 		FileOutputStream fos = new FileOutputStream("result.enc");
 
 		// IV
@@ -59,7 +60,7 @@ public class fileEncrypt {
 		while ((read = fis.read(input, 0, BUF_SIZE)) == BUF_SIZE) {
 			encLength = encLength + read;
 			encProgress = (float) encLength / (int) fileSize;
-			if (encProgress > encStep) {
+			if (encProgress >= encStep) {
 				System.out.printf("%.0f%%\t", encStep * 100);
 				encStep = encStep + 0.05;
 			}
@@ -117,13 +118,13 @@ public class fileEncrypt {
 		while ((read = fis.read(plainText, 0, BUF_SIZE)) == BUF_SIZE) {
 			decLength = decLength + read;
 			decProgress = (float) decLength / (int) decFileSize;
-			if (decProgress > decStep) {
+			if (decProgress >= decStep) {
 				System.out.printf("%.0f%%\t", decStep * 100);
 				decStep = decStep + 0.05;
 			}
 			fos.write(cipher.update(plainText, 0, read));
 		}
-		System.out.printf("%.0f%%\n", encStep * 100);
+		System.out.printf("%.0f%%\n", decStep * 100);
 		fos.write(cipher.doFinal(plainText, 0, read));
 		System.out.println("--------Decryption Completed--------");
 
