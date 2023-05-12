@@ -24,7 +24,6 @@ public class fileEncrypt {
 
 		// Instance 불러오기
 		MessageDigest md = MessageDigest.getInstance("SHA1", "BC");
-
 		String P = "";
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Type your password: ");
@@ -53,7 +52,7 @@ public class fileEncrypt {
 		byte[] resultKey = new byte[16];
 
 		System.arraycopy(outputKey, 0, resultKey, 0, 16);
-		
+
 		System.out.println("----------Encryption Start----------");
 
 		byte[] input = new byte[BUF_SIZE];
@@ -82,8 +81,8 @@ public class fileEncrypt {
 		while ((read = fis.read(input, 0, BUF_SIZE)) == BUF_SIZE) {
 			encLength = encLength + read;
 			encProgress = (float) encLength / (int) fileSize;
-			if(encProgress > encStep) {
-				System.out.printf("%.0f%%\n", encStep * 100);	
+			if (encProgress > encStep) {
+				System.out.printf("%.0f%%\n", encStep * 100);
 				encStep = encStep + 0.05;
 				if (encStep > 1) {
 					break;
@@ -96,22 +95,20 @@ public class fileEncrypt {
 		fis.close();
 		fos.close();
 
-		
 		fis = new FileInputStream("result.enc");
 		fos = new FileOutputStream("sample_dec.jpg");
-		
+
 		byte[] compareKey = new byte[16];
 		byte[] plainText = new byte[16];
 		byte[] IV = new byte[16];
-		
-		
+
 		// 패스워드 입력받고 각 해쉬값 비교하기
-		
+
 		fis.read(compareKey, 0, 16);
 		sc = new Scanner(System.in);
 		System.out.print("Type your password to decrypt: ");
 		P = sc.nextLine();
-		
+
 		S = new byte[] { 0x78, 0x57, (byte) 0x8e, 0x5a, 0x5d, 0x63, (byte) 0xcb, 0x06 };
 		c = 1000;
 
@@ -134,24 +131,24 @@ public class fileEncrypt {
 		outputKey = md.digest();
 		resultKey = new byte[16];
 		System.arraycopy(outputKey, 0, resultKey, 0, 16);
-		
+
 		String resultText = Utils.toHexString(resultKey);
 		String compareText = Utils.toHexString(compareKey);
-		if(resultText.equals(compareText)) {
+		if (resultText.equals(compareText)) {
 			System.out.println("Correct.");
 			System.out.println("----------Decryption Start----------");
 		}
-		
+
 		fis.read(IV, 0, 16);
 		System.out.print("IV: ");
 		System.out.println(Utils.toHexString(IV));
 		iv = new IvParameterSpec(IV);
 		cipher.init(Cipher.DECRYPT_MODE, key, iv);
-		/* 
+		/*
 		 * byte[] plainText = new byte[20]; read = fis.read(plainText, 0, 20);
 		 * System.out.println(Utils.toHexString(plainText));
 		 */
-		//read = fis.read(plainText, 0, 16);
+		// read = fis.read(plainText, 0, 16);
 		System.out.println(Utils.toHexString(plainText));
 		plainText = new byte[BUF_SIZE];
 		while ((read = fis.read(plainText, 0, BUF_SIZE)) == BUF_SIZE) {
@@ -160,4 +157,5 @@ public class fileEncrypt {
 		fos.write(cipher.doFinal(plainText, 0, read));
 
 	}
+
 }
